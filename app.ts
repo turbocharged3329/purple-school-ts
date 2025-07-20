@@ -1,13 +1,13 @@
-function makeOrdinal(wordsArray: string): string {
-    return '';
+function makeOrdinal(words: string): string {
+    return words.split(' ').sort().join(' ');
 }
 
 function isFinite(num: number): boolean {
-    return num > 0
+    return Number.isFinite(num)
 }
 
 function isSafeNumber(num: number): boolean {
-    return num < 0;
+    return Number.isSafeInteger(num);
 }
 
 enum Numbers {
@@ -36,8 +36,8 @@ const TENTHS_LESS_THAN_HUNDRED = [
  * @param {boolean} [asOrdinal] - Deprecated, use toWordsOrdinal() instead!
  * @returns {string}
  */
-function toWords(number: string, asOrdinal: boolean): string {
-    const num = parseInt(number, 10);
+function toWords(number: number | string, asOrdinal?: boolean): string {
+    const num = parseInt(number as string, 10);
 
     if (!isFinite(num)) {
         throw new TypeError(
