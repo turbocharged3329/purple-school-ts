@@ -112,28 +112,31 @@ function generateWords(number, initialWords = []) {
     }
     else if (number < Numbers.ONE_THOUSAND) {
         remainder = number % Numbers.ONE_HUNDRED;
-        word = generateWords(Math.floor(number / Numbers.ONE_HUNDRED)) + ' hundred';
+        word = generateWords(Math.floor(number / Numbers.ONE_HUNDRED), []) + ' hundred';
     }
     else if (number < Numbers.ONE_MILLION) {
         remainder = number % Numbers.ONE_THOUSAND;
-        word = generateWords(Math.floor(number / Numbers.ONE_THOUSAND)) + ' thousand,';
+        word = generateWords(Math.floor(number / Numbers.ONE_THOUSAND), []) + ' thousand,';
     }
     else if (number < Numbers.ONE_BILLION) {
         remainder = number % Numbers.ONE_MILLION;
-        word = generateWords(Math.floor(number / Numbers.ONE_MILLION)) + ' million,';
+        word = generateWords(Math.floor(number / Numbers.ONE_MILLION), []) + ' million,';
     }
     else if (number < Numbers.ONE_TRILLION) {
         remainder = number % Numbers.ONE_BILLION;
-        word = generateWords(Math.floor(number / Numbers.ONE_BILLION)) + ' billion,';
+        word = generateWords(Math.floor(number / Numbers.ONE_BILLION), []) + ' billion,';
     }
     else if (number < Numbers.ONE_QUADRILLION) {
         remainder = number % Numbers.ONE_TRILLION;
-        word = generateWords(Math.floor(number / Numbers.ONE_TRILLION)) + ' trillion,';
+        word = generateWords(Math.floor(number / Numbers.ONE_TRILLION), []) + ' trillion,';
     }
     else if (number <= Numbers.MAX) {
         remainder = number % Numbers.ONE_QUADRILLION;
-        word = generateWords(Math.floor(number / Numbers.ONE_QUADRILLION)) +
+        word = generateWords(Math.floor(number / Numbers.ONE_QUADRILLION), []) +
             ' quadrillion,';
+    }
+    else {
+        throw new RangeError('Input is too large. Maximum supported number is ' + Numbers.MAX);
     }
     wordsArray.push(word);
     return generateWords(remainder, wordsArray);
