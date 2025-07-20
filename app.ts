@@ -1,5 +1,31 @@
 function makeOrdinal(words: string): string {
-    return words.split(' ').sort().join(' ');
+    const trimmed = words.replace(/,$/, '');
+    const lastWord = trimmed.split(' ').pop() || '';
+    
+    if (lastWord === 'zero') return 'zeroth';
+    if (lastWord === 'one') return trimmed.replace(/one$/, 'first');
+    if (lastWord === 'two') return trimmed.replace(/two$/, 'second');
+    if (lastWord === 'three') return trimmed.replace(/three$/, 'third');
+    if (lastWord === 'five') return trimmed.replace(/five$/, 'fifth');
+    if (lastWord === 'eight') return trimmed.replace(/eight$/, 'eighth');
+    if (lastWord === 'nine') return trimmed.replace(/nine$/, 'ninth');
+    if (lastWord === 'twelve') return trimmed.replace(/twelve$/, 'twelfth');
+    if (lastWord === 'twenty') return trimmed.replace(/twenty$/, 'twentieth');
+    if (lastWord === 'thirty') return trimmed.replace(/thirty$/, 'thirtieth');
+    if (lastWord === 'forty') return trimmed.replace(/forty$/, 'fortieth');
+    if (lastWord === 'fifty') return trimmed.replace(/fifty$/, 'fiftieth');
+    if (lastWord === 'sixty') return trimmed.replace(/sixty$/, 'sixtieth');
+    if (lastWord === 'seventy') return trimmed.replace(/seventy$/, 'seventieth');
+    if (lastWord === 'eighty') return trimmed.replace(/eighty$/, 'eightieth');
+    if (lastWord === 'ninety') return trimmed.replace(/ninety$/, 'ninetieth');
+    
+    // For numbers ending in 'y', replace with 'ieth'
+    if (lastWord.endsWith('y')) {
+        return trimmed.replace(new RegExp(lastWord + '$'), lastWord.slice(0, -1) + 'ieth');
+    }
+    
+    // For most other numbers, just add 'th'
+    return trimmed + 'th';
 }
 
 function isFinite(num: number): boolean {
