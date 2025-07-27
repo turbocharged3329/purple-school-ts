@@ -90,9 +90,15 @@ async function getAdminUsers(): Promise<User[] | []> {
         const response = await fetch('https://dummyjson.com/users')
         const data = await response.json()
         
-        const users = data.users.forEach((user: unknown) => isCorrectUser(user))
+        if (data.users) {
+            const users = data.users
+            users.forEach((user: unknown) => isCorrectUser(user))
 
-        return users.filter((user: User) => user.role === UserRole.Admin)
+            return users.filter((user: User) => user.role === UserRole.Admin)
+        } else {
+            throw new Error('Users not found')
+        }
+        
     } catch (error) {
         console.error(error)
         return []

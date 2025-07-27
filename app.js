@@ -17,8 +17,14 @@ async function getAdminUsers() {
     try {
         const response = await fetch('https://dummyjson.com/users');
         const data = await response.json();
-        const users = data.users.forEach((user) => isCorrectUser(user));
-        return users.filter((user) => user.role === UserRole.Admin);
+        if (data.users) {
+            const users = data.users;
+            users.forEach((user) => isCorrectUser(user));
+            return users.filter((user) => user.role === UserRole.Admin);
+        }
+        else {
+            throw new Error('Users not found');
+        }
     }
     catch (error) {
         console.error(error);
